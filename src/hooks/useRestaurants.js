@@ -7,25 +7,36 @@ export function useRestaurants() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  // TODO: Llamar a GET /restaurants con los parámetros { page, limit, district, category }
-  // Actualizar los estados: restaurants, pagination, loading, error
   async function fetchRestaurants({ page = 1, limit = 9, district, category } = {}) {
-    // Tu código aquí
+    setLoading(true)
+    setError(null)
+    try {
+      const params = { page, limit }
+      if (district) params.district = district
+      if (category) params.category = category
+      const res = await client.get('/restaurants', { params })
+      setRestaurants(res.data.data)
+      setPagination(res.data.pagination)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  // TODO: Llamar a POST /restaurants con los datos del formulario
   async function createRestaurant(data) {
-    // Tu código aquí
+    const res = await client.post('/restaurants', data)
+    return res.data
   }
 
-  // TODO: Llamar a PUT /restaurants/:id con los datos del formulario
   async function updateRestaurant(id, data) {
-    // Tu código aquí
+    const res = await client.put(`/restaurants/${id}`, data)
+    return res.data
   }
 
-  // TODO: Llamar a DELETE /restaurants/:id
   async function removeRestaurant(id) {
-    // Tu código aquí
+    const res = await client.delete(`/restaurants/${id}`)
+    return res.data
   }
 
   return {

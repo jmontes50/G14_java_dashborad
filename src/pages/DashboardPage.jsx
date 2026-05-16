@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRestaurants } from '../hooks/useRestaurants'
 import { useDistricts } from '../hooks/useDistricts'
 import { useCategories } from '../hooks/useCategories'
+import { useAuthStore } from '../store/useAuthStore'
 import RestaurantCard from '../components/RestaurantCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
@@ -10,32 +11,30 @@ export default function DashboardPage() {
   const { restaurants, pagination, loading, error, fetchRestaurants, removeRestaurant } = useRestaurants()
   const { data: districts } = useDistricts()
   const { data: categories } = useCategories()
+  const token = useAuthStore((state) => state.token)
 
   const [filters, setFilters] = useState({ district: '', category: '' })
 
-  // TODO: Al montarse y cada vez que cambien los filtros, llamar a fetchRestaurants
-  // Pasar los filtros activos como parámetros
   useEffect(() => {
-    // Tu código aquí
+    fetchRestaurants({ page: 1, ...filters })
   }, [filters])
 
-  // TODO: Actualizar el estado de filtros al cambiar un select
   function handleFilterChange(newFilters) {
-    // Tu código aquí
+    setFilters(newFilters)
   }
 
-  // TODO: Llamar a fetchRestaurants con la nueva página y los filtros actuales
   function handlePageChange(page) {
-    // Tu código aquí
+    fetchRestaurants({ page, ...filters })
   }
 
-  // TODO: Llamar a removeRestaurant(id) y refrescar la lista
   async function handleDelete(id) {
-    // Tu código aquí
+    try {
+      await removeRestaurant(id)
+      fetchRestaurants({ page: 1, ...filters })
+    } catch (err) {
+      alert(err.message)
+    }
   }
-
-  // TODO: Leer si el usuario está autenticado desde el store de Zustand
-  const isAuthenticated = false
 
   if (loading) {
     return (
@@ -75,7 +74,7 @@ export default function DashboardPage() {
             <RestaurantCard
               key={restaurant.id}
               restaurant={restaurant}
-              showActions={isAuthenticated}
+              showActions={Boolean(token)}
               onDelete={handleDelete}
             />
           ))}

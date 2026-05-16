@@ -6,9 +6,13 @@ export function useCategories() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  // TODO: Al montarse, llamar a GET /categories y guardar el resultado en `data`
   useEffect(() => {
-    // Tu código aquí
+    setLoading(true)
+    client
+      .get('/categories')
+      .then((res) => setData(res.data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
   }, [])
 
   return { data, loading, error }

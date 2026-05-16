@@ -41,13 +41,17 @@ export default function RestaurantFormPage() {
     })
   }, [id, isEditing, reset])
 
-  // TODO: Implementar onSubmit
-  // Si isEditing: llamar a updateRestaurant(id, data)
-  // Si no: llamar a createRestaurant(data)
-  // Tras éxito: navegar al dashboard con navigate("/")
-  // Si falla: setError("root", { message: err.message })
   async function onSubmit(data) {
-    // Tu código aquí
+    try {
+      if (isEditing) {
+        await updateRestaurant(id, data)
+      } else {
+        await createRestaurant(data)
+      }
+      navigate('/')
+    } catch (err) {
+      setError('root', { message: err.message })
+    }
   }
 
   return (
@@ -56,7 +60,11 @@ export default function RestaurantFormPage() {
         {isEditing ? 'Editar restaurante' : 'Nuevo restaurante'}
       </h1>
 
-      {/* TODO: Mostrar alerta de error si errors.root existe */}
+      {errors.root && (
+        <div className="alert alert-error mb-4">
+          <span>{errors.root.message}</span>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="form-control">

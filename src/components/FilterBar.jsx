@@ -4,16 +4,16 @@ export default function FilterBar({ districts = [], categories = [], onFilterCha
   const [district, setDistrict] = useState('')
   const [category, setCategory] = useState('')
 
-  // TODO: Al cambiar el select de distrito, actualizar el estado local
-  // y llamar a onFilterChange({ district: valor, category: valorActual })
   function handleDistrictChange(e) {
-    // Tu código aquí
+    const value = e.target.value
+    setDistrict(value)
+    onFilterChange({ district: value, category })
   }
 
-  // TODO: Al cambiar el select de categoría, actualizar el estado local
-  // y llamar a onFilterChange({ district: valorActual, category: valor })
   function handleCategoryChange(e) {
-    // Tu código aquí
+    const value = e.target.value
+    setCategory(value)
+    onFilterChange({ district, category: value })
   }
 
   return (

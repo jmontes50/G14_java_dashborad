@@ -1,8 +1,12 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/useAuthStore'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const { login, token } = useAuthStore()
+
   const {
     register,
     handleSubmit,
@@ -10,15 +14,17 @@ export default function LoginPage() {
     setError,
   } = useForm()
 
-  // TODO: Si ya hay sesión activa, redirigir al dashboard
-  // Pista: leer `token` del store de Zustand y usar useEffect + navigate
+  useEffect(() => {
+    if (token) navigate('/')
+  }, [token, navigate])
 
-  // TODO: Implementar onSubmit
-  // 1. Llamar a login(email, password) del store de Zustand
-  // 2. Si tiene éxito, navegar a "/"
-  // 3. Si falla, mostrar el error con setError("root", { message: "..." })
-  async function onSubmit(data) {
-    // Tu código aquí
+  async function onSubmit({ email, password }) {
+    try {
+      await login(email, password)
+      navigate('/')
+    } catch (err) {
+      setError('root', { message: err.message || 'Credenciales incorrectas' })
+    }
   }
 
   return (
@@ -27,7 +33,11 @@ export default function LoginPage() {
         <div className="card-body">
           <h2 className="card-title text-2xl justify-center mb-4">Iniciar sesión</h2>
 
-          {/* TODO: Mostrar alerta de error si errors.root existe */}
+          {errors.root && (
+            <div className="alert alert-error mb-4">
+              <span>{errors.root.message}</span>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="form-control">
