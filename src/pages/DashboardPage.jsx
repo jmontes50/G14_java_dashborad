@@ -17,6 +17,7 @@ export default function DashboardPage() {
   // Pasar los filtros activos como parámetros
   useEffect(() => {
     // Tu código aquí
+    fetchRestaurants();
   }, [filters])
 
   // TODO: Actualizar el estado de filtros al cambiar un select

@@ -10,7 +10,17 @@ export function useRestaurants() {
   // TODO: Llamar a GET /restaurants con los parámetros { page, limit, district, category }
   // Actualizar los estados: restaurants, pagination, loading, error
   async function fetchRestaurants({ page = 1, limit = 9, district, category } = {}) {
-    // Tu código aquí
+    try {
+      setLoading(true)
+      const respuesta = await client.get('/restaurants');
+      console.log(respuesta)
+      setRestaurants(respuesta.data.data);
+      setPagination(respuesta.data.pagination);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(true);
+    }
   }
 
   // TODO: Llamar a POST /restaurants con los datos del formulario
