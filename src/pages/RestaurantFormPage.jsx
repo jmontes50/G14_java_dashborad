@@ -9,7 +9,7 @@ import client from '../api/client'
 export default function RestaurantFormPage() {
   const { id } = useParams()
   console.log({ id });
-  const isEditing = Boolean(id)
+  const isEditing = Boolean(id) //estamos convirtiendo a un valor V/F
   const navigate = useNavigate()
 
   const { createRestaurant, updateRestaurant } = useRestaurants()
@@ -28,6 +28,7 @@ export default function RestaurantFormPage() {
     if (!isEditing) return
     client.get(`/restaurants/${id}`).then((res) => {
       const r = res.data
+      //reset da valor al estado interno de useForm
       reset({
         name: r.name,
         description: r.description,
@@ -64,7 +65,7 @@ export default function RestaurantFormPage() {
           <label className="label"><span className="label-text">Nombre *</span></label>
           <input
             type="text"
-            className={`input input-bordered ${errors.name ? 'input-error' : ''}`}
+            className={`input input-bordered w-full ${errors.name ? 'input-error' : ''}`}
             {...register('name', { required: 'El nombre es obligatorio' })}
           />
           {errors.name && <span className="text-error text-sm mt-1">{errors.name.message}</span>}
@@ -72,14 +73,14 @@ export default function RestaurantFormPage() {
 
         <div className="form-control">
           <label className="label"><span className="label-text">Descripción</span></label>
-          <textarea className="textarea textarea-bordered" rows={3} {...register('description')} />
+          <textarea className="textarea textarea-bordered w-full" rows={3} {...register('description')} />
         </div>
 
         <div className="form-control">
           <label className="label"><span className="label-text">Dirección *</span></label>
           <input
             type="text"
-            className={`input input-bordered ${errors.address ? 'input-error' : ''}`}
+            className={`input input-bordered w-full ${errors.address ? 'input-error' : ''}`}
             {...register('address', { required: 'La dirección es obligatoria' })}
           />
           {errors.address && <span className="text-error text-sm mt-1">{errors.address.message}</span>}
