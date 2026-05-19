@@ -48,7 +48,8 @@ const useAuthStore = create(
       const res = await client.post('/auth/login', { email, password })
       console.log({ res });
       set({ user: res.data.user, token: res.data.token })
-    }
+    },
+    logout: () => set({ user: null, token: null })
   }), { name: 'auth-storage' }))
 
 export default useAuthStore;
