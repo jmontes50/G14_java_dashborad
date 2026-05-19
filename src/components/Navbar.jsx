@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
-
+import useAuthStore from '../store/useAuthStore'
 // TODO: Importar useAuthStore para leer el estado de sesión
 
 export default function Navbar() {
   // TODO: Leer `user`, `token` y `logout` del store de Zustand
-  const user = null
-  const token = null
-  const logout = () => {}
+  // const user = null
+  // const token = null
+  // const logout = () => {}
+
+  const { user, token, logout } = useAuthStore();
 
   return (
     <div className="navbar bg-base-200 shadow-sm px-4">
