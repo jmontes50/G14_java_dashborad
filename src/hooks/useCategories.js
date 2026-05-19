@@ -10,7 +10,7 @@ export function useCategories() {
   useEffect(() => {
     // Tu código aquí
     setLoading(true);
-    client.get('/districts')
+    client.get('/categories')
     .then((res) => {
       setData(res.data);
       setLoading(false);

@@ -8,7 +8,17 @@ export function useDistricts() {
 
   // TODO: Al montarse, llamar a GET /districts y guardar el resultado en `data`
   useEffect(() => {
-    // Tu código aquí
+    const getDistricts = async () => {
+      setLoading(true);
+      try {
+        const res = await client.get('/districts');
+        setData(res.data);
+        setLoading(false)
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    }
   }, [])
 
   return { data, loading, error }
