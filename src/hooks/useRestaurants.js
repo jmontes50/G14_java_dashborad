@@ -12,6 +12,7 @@ export function useRestaurants() {
   async function fetchRestaurants({ page = 1, limit = 9, district, category } = {}) {
     try {
       setLoading(true)
+      console.log(client)
       const respuesta = await client.get('/restaurants');
       console.log(respuesta)
       setRestaurants(respuesta.data.data);
@@ -19,6 +20,7 @@ export function useRestaurants() {
       setLoading(false);
     } catch (error) {
       console.error(error);
+      setError(error);
       setLoading(true);
     }
   }

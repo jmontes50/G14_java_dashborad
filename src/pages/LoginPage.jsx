@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 export default function LoginPage() {
   const navigate = useNavigate()
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
+    register, //registro de un input, 
+    handleSubmit, //una función que recibe otra función, para manejar el submit
+    formState: { errors, isSubmitting }, // errores en cada input y el estado
+    setError, //para indicar un error
   } = useForm()
 
   // TODO: Si ya hay sesión activa, redirigir al dashboard
@@ -19,6 +19,7 @@ export default function LoginPage() {
   // 3. Si falla, mostrar el error con setError("root", { message: "..." })
   async function onSubmit(data) {
     // Tu código aquí
+    console.log(data)
   }
 
   return (
@@ -38,6 +39,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="admin@gastro.com"
                 className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
+                ///* register pedirá 02 args (nombre de registro, { errores y el mensaje }) */
                 {...register('email', { required: 'El correo es obligatorio' })}
               />
               {errors.email && (
@@ -55,8 +57,15 @@ export default function LoginPage() {
                 type="password"
                 placeholder="••••••••"
                 className={`input input-bordered w-full ${errors.password ? 'input-error' : ''}`}
-                {...register('password', { required: 'La contraseña es obligatoria' })}
+                {...register('password', {
+                  required: 'La contraseña es obligatoria', 
+                  minLength: {
+                    value: 6,
+                    message: "la longitud tiene que ser de 6 carácteres a más"
+                  }
+                })}
               />
+              {errors.password && console.log(errors)}
               {errors.password && (
                 <label className="label">
                   <span className="label-text-alt text-error">{errors.password.message}</span>
