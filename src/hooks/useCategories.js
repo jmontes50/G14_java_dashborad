@@ -9,6 +9,16 @@ export function useCategories() {
   // TODO: Al montarse, llamar a GET /categories y guardar el resultado en `data`
   useEffect(() => {
     // Tu código aquí
+    setLoading(true);
+    client.get('/districts')
+    .then((res) => {
+      setData(res.data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      setError(err);
+      setLoading(false);
+    })
   }, [])
 
   return { data, loading, error }
