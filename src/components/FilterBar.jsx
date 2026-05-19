@@ -35,6 +35,7 @@ export default function FilterBar({ districts = [], categories = [], onFilterCha
         onChange={handleCategoryChange}
       >
         <option value="">Todas las categorías</option>
+        {console.log({categories})}
         {categories.map((c) => (
           <option key={c.id} value={c.id}>{c.name}</option>
         ))}

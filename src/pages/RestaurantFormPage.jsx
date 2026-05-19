@@ -8,6 +8,7 @@ import client from '../api/client'
 
 export default function RestaurantFormPage() {
   const { id } = useParams()
+  console.log({ id });
   const isEditing = Boolean(id)
   const navigate = useNavigate()
 

@@ -12,7 +12,8 @@ export function useCategories() {
     setLoading(true);
     client.get('/categories')
     .then((res) => {
-      setData(res.data);
+      console.log(res.data)
+      setData(res.data.data);
       setLoading(false);
     })
     .catch((err) => {

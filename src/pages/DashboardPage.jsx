@@ -54,6 +54,7 @@ export default function DashboardPage() {
     )
   }
 
+  console.log({ categories })
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
