@@ -27,7 +27,8 @@ export function useRestaurants() {
 
   // TODO: Llamar a POST /restaurants con los datos del formulario
   async function createRestaurant(data) {
-    // Tu código aquí
+    const res = await client.post('/restaurants', data)
+    return res.data;
   }
 
   // TODO: Llamar a PUT /restaurants/:id con los datos del formulario
