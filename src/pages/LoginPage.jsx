@@ -1,8 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import useAuthStore from '../store/useAuthStore'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+
+  const { login, token } = useAuthStore()
+  console.log({ token });
+
   const {
     register, //registro de un input, 
     handleSubmit, //una función que recibe otra función, para manejar el submit
@@ -19,7 +24,8 @@ export default function LoginPage() {
   // 3. Si falla, mostrar el error con setError("root", { message: "..." })
   async function onSubmit(data) {
     // Tu código aquí
-    console.log(data)
+    await login (data.email, data.password);
+   
   }
 
   return (
@@ -65,7 +71,7 @@ export default function LoginPage() {
                   }
                 })}
               />
-              {errors.password && console.log(errors)}
+              {/* {errors.password && console.log(errors)} */}
               {errors.password && (
                 <label className="label">
                   <span className="label-text-alt text-error">{errors.password.message}</span>
