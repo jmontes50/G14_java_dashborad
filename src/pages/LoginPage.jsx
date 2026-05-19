@@ -23,8 +23,12 @@ export default function LoginPage() {
   // 2. Si tiene éxito, navegar a "/"
   // 3. Si falla, mostrar el error con setError("root", { message: "..." })
   async function onSubmit(data) {
-    // Tu código aquí
-    await login (data.email, data.password);
+    try {
+      await login (data.email, data.password);
+      navigate('/');
+    } catch (error) {
+      setError('root', "Credenciales incorrectas")
+    }
    
   }
 
