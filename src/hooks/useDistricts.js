@@ -12,13 +12,14 @@ export function useDistricts() {
       setLoading(true);
       try {
         const res = await client.get('/districts');
-        setData(res.data);
+        setData(res.data.data);
         setLoading(false)
       } catch (error) {
         setError(error);
         setLoading(false);
       }
     }
+    getDistricts();
   }, [])
 
   return { data, loading, error }

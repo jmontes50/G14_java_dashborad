@@ -67,6 +67,8 @@ export default function DashboardPage() {
         onFilterChange={handleFilterChange}
       />
 
+      {console.log({ districts })}
+
       {restaurants.length === 0 ? (
         <div className="alert alert-info mt-6">
           <span>No se encontraron restaurantes con los filtros seleccionados.</span>

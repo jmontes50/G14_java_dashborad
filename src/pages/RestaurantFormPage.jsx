@@ -16,6 +16,8 @@ export default function RestaurantFormPage() {
   const { data: districts } = useDistricts()
   const { data: categories } = useCategories()
 
+  console.log(districts)
+
   const {
     register,
     handleSubmit,
@@ -49,7 +51,11 @@ export default function RestaurantFormPage() {
   // Tras éxito: navegar al dashboard con navigate("/")
   // Si falla: setError("root", { message: err.message })
   async function onSubmit(data) {
-    // Tu código aquí
+    console.log("Submit crear", data);
+    
+    //creando
+    const res = await createRestaurant(data)
+    console.log("crear restaurante", res);
   }
 
   return (
