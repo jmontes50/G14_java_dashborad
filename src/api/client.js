@@ -1,8 +1,10 @@
 import axios from 'axios'
 import useAuthStore from '../store/useAuthStore';
 
+console.log("env", import.meta.env)
+
 const client = axios.create({
-  baseURL: 'https://api-donde.onrender.com/api',
+  baseURL: import.meta.env.VITE_BASE_URL,
 })
 
 client.interceptors.request.use((config) => {
