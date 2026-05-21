@@ -28,7 +28,8 @@ export default function RestaurantFormPage() {
   useEffect(() => {
     if (!isEditing) return
     client.get(`/restaurants/${id}`).then((res) => {
-      const r = res.data
+      // console.log({ res })
+      const r = res.data.data
       //reset da valor al estado interno de useForm
       reset({
         name: r.name,
@@ -52,8 +53,14 @@ export default function RestaurantFormPage() {
   async function onSubmit(data) {
     try {
       //creando
-      const res = await createRestaurant(data)
-      toast.success("Restaurante creado");
+      if(isEditing){
+        
+      } else {
+        //esta creando
+        const res = await createRestaurant(data);
+        toast.success("Restaurante creado");
+      }
+
       navigate('/');
     } catch (error) {
       console.log(error);

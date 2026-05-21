@@ -33,12 +33,14 @@ export function useRestaurants() {
 
   // TODO: Llamar a PUT /restaurants/:id con los datos del formulario
   async function updateRestaurant(id, data) {
-    // Tu código aquí
+    const res = await client.put(`/restaurants/${id}`, data);
+    return res.data;
   }
 
   // TODO: Llamar a DELETE /restaurants/:id
   async function removeRestaurant(id) {
-    // Tu código aquí
+    const res = await client.delete(`/restaurants/${id}`, data);
+    return res.data;
   }
 
   return {
