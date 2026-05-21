@@ -5,6 +5,7 @@ import { useRestaurants } from '../hooks/useRestaurants'
 import { useDistricts } from '../hooks/useDistricts'
 import { useCategories } from '../hooks/useCategories'
 import client from '../api/client'
+import { toast } from 'react-toastify'
 
 export default function RestaurantFormPage() {
   const { id } = useParams()
@@ -15,8 +16,6 @@ export default function RestaurantFormPage() {
   const { createRestaurant, updateRestaurant } = useRestaurants()
   const { data: districts } = useDistricts()
   const { data: categories } = useCategories()
-
-  console.log(districts)
 
   const {
     register,
@@ -56,6 +55,8 @@ export default function RestaurantFormPage() {
     //creando
     const res = await createRestaurant(data)
     console.log("crear restaurante", res);
+    toast.success("Restaurante creado");
+    navigate('/');
   }
 
   return (

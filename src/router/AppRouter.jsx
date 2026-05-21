@@ -4,6 +4,7 @@ import DashboardPage from '../pages/DashboardPage'
 import LoginPage from '../pages/LoginPage'
 import RestaurantFormPage from '../pages/RestaurantFormPage'
 import ProtectedRoute from './ProtectedRoute'
+import { ToastContainer } from 'react-toastify'
 
 // TODO (más adelante): Importar ProtectedRoute y envolver las rutas privadas
 
@@ -23,6 +24,7 @@ export default function AppRouter() {
           <Route path="/restaurants/:id/edit" element={<RestaurantFormPage />} />
         </Routes>
       </main>
+      <ToastContainer />
     </BrowserRouter>
   )
 }
