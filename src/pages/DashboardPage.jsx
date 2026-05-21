@@ -5,11 +5,14 @@ import { useCategories } from '../hooks/useCategories'
 import RestaurantCard from '../components/RestaurantCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
+import useAuthStore from '../store/useAuthStore'
 
 export default function DashboardPage() {
   const { restaurants, pagination, loading, error, fetchRestaurants, removeRestaurant } = useRestaurants()
   const { data: districts } = useDistricts()
   const { data: categories } = useCategories()
+
+  const { token } = useAuthStore();
 
   const [filters, setFilters] = useState({ district: '', category: '' })
 
@@ -36,7 +39,7 @@ export default function DashboardPage() {
   }
 
   // TODO: Leer si el usuario está autenticado desde el store de Zustand
-  const isAuthenticated = false
+  const isAuthenticated = Boolean(token);
 
   if (loading) {
     return (
