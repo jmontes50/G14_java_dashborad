@@ -50,13 +50,15 @@ export default function RestaurantFormPage() {
   // Tras éxito: navegar al dashboard con navigate("/")
   // Si falla: setError("root", { message: err.message })
   async function onSubmit(data) {
-    console.log("Submit crear", data);
-    
-    //creando
-    const res = await createRestaurant(data)
-    console.log("crear restaurante", res);
-    toast.success("Restaurante creado");
-    navigate('/');
+    try {
+      //creando
+      const res = await createRestaurant(data)
+      toast.success("Restaurante creado");
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+      toast.error("Ocurrió un error, pruebe en unos minutos");
+    }
   }
 
   return (
