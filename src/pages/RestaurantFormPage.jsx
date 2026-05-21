@@ -54,7 +54,8 @@ export default function RestaurantFormPage() {
     try {
       //creando
       if(isEditing){
-        
+        const res = await updateRestaurant(id, data);
+        toast.success("Restaurante actualizado");
       } else {
         //esta creando
         const res = await createRestaurant(data);
