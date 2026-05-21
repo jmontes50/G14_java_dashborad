@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import { useRestaurants } from '../hooks/useRestaurants'
 import { useDistricts } from '../hooks/useDistricts'
 import { useCategories } from '../hooks/useCategories'
@@ -13,6 +13,8 @@ export default function DashboardPage() {
   const { data: categories } = useCategories()
 
   const { token } = useAuthStore();
+
+  const modal = useRef();
 
   const [filters, setFilters] = useState({ district: '', category: '' })
 
@@ -36,6 +38,7 @@ export default function DashboardPage() {
   // TODO: Llamar a removeRestaurant(id) y refrescar la lista
   async function handleDelete(id) {
     // Tu código aquí
+    modal.current.showModal();
   }
 
   // TODO: Leer si el usuario está autenticado desde el store de Zustand
@@ -92,6 +95,17 @@ export default function DashboardPage() {
           <Pagination pagination={pagination} onPageChange={handlePageChange} />
         </div>
       )}
+      <dialog ref={modal} className='modal'>
+        <div className='modal-box'>
+        <h3>Modal</h3>
+        <div className='modal-action'>
+          <button className='btn btn-primary btn-sm' onClick={() => modal.current.close()}>
+            Cerrar
+          </button>
+        </div>
+        </div>
+        hola
+      </dialog>
     </div>
   )
 }

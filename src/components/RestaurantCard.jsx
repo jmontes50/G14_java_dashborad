@@ -34,9 +34,10 @@ export default function RestaurantCard({ restaurant, showActions = false, onDele
             <button
               className="btn btn-sm btn-error btn-outline"
               onClick={() => {
-                if (confirm(`¿Eliminar "${name}"? Esta acción no se puede deshacer.`)) {
-                  onDelete(id)
-                }
+                // if (confirm(`¿Eliminar "${name}"? Esta acción no se puede deshacer.`)) {
+                //   onDelete(id)
+                // }
+                onDelete(id);
               }}
             >
               Eliminar
