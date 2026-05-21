@@ -6,6 +6,7 @@ import RestaurantCard from '../components/RestaurantCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
 import useAuthStore from '../store/useAuthStore'
+import { toast } from "react-toastify";
 
 export default function DashboardPage() {
   const { restaurants, pagination, loading, error, fetchRestaurants, removeRestaurant } = useRestaurants()
@@ -17,6 +18,7 @@ export default function DashboardPage() {
   const modal = useRef();
 
   const [filters, setFilters] = useState({ district: '', category: '' })
+  const [pendingIdDelete, setPendingIdDelete] = useState(null);
 
   // TODO: Al montarse y cada vez que cambien los filtros, llamar a fetchRestaurants
   // Pasar los filtros activos como parámetros
@@ -39,6 +41,19 @@ export default function DashboardPage() {
   async function handleDelete(id) {
     // Tu código aquí
     modal.current.showModal();
+    setPendingIdDelete(id);
+  }
+
+  async function confirmDelete(){
+    try {
+      await removeRestaurant(pendingIdDelete);
+      console.log({pendingIdDelete})
+      toast.success("Producto Eliminado");
+      fetchRestaurants()
+    } catch (error) {
+      console.log(error);
+      toast.error("Intente o actualice la aplicación por favor");
+    }
   }
 
   // TODO: Leer si el usuario está autenticado desde el store de Zustand
@@ -60,7 +75,6 @@ export default function DashboardPage() {
     )
   }
 
-  console.log({ categories })
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -97,8 +111,11 @@ export default function DashboardPage() {
       )}
       <dialog ref={modal} className='modal'>
         <div className='modal-box'>
-        <h3>Modal</h3>
+        <h3>Confirma la eliminación del restaurante?</h3>
         <div className='modal-action'>
+          <button className='btn btn-warning btn-sm' onClick={confirmDelete}>
+            Confirmar
+          </button>
           <button className='btn btn-primary btn-sm' onClick={() => modal.current.close()}>
             Cerrar
           </button>

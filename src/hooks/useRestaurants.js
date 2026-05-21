@@ -39,7 +39,7 @@ export function useRestaurants() {
 
   // TODO: Llamar a DELETE /restaurants/:id
   async function removeRestaurant(id) {
-    const res = await client.delete(`/restaurants/${id}`, data);
+    const res = await client.delete(`/restaurants/${id}`);
     return res.data;
   }
 
